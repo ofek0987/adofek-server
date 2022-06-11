@@ -5,7 +5,6 @@ if TYPE_CHECKING:
 
 
 class MessagesPool:
-
     def push(self, message: BaseMessage):
         ...
 
