@@ -15,4 +15,6 @@ class BaseMessage(metaclass=ABCMeta):
 
     @abstractmethod
     def to_json(self) -> str:
+        """Represent a message in json form.
+        Used for sending/receiving messages."""
         ...
