@@ -14,9 +14,6 @@ class TextMessage(BaseMessage):
     text: str
 
     def to_json(self) -> str:
-        future_json = {
-            str(key): str(value)
-            for key, value in vars(self).items()
-        }
+        future_json = self._get_vars_dict_for_json()
         future_json[consts.MESSAGE_JSON_TYPE_FIELD] = MessageType.TEXT.value
         return json.dumps(future_json)

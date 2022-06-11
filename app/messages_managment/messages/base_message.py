@@ -18,3 +18,10 @@ class BaseMessage(metaclass=ABCMeta):
         """Represent a message in json form.
         Used for sending/receiving messages."""
         ...
+
+    def _get_vars_dict_for_json(self) -> dict:
+        """Generate stringified dict from the class's properties."""
+        return {
+            str(key): str(value)
+            for key, value in vars(self).items()
+        }
