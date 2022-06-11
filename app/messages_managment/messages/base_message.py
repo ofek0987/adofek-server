@@ -1,10 +1,13 @@
-from abc import ABC, abstractmethod
+from __future__ import annotations
+
+from abc import ABCMeta
+from abc import abstractmethod
 from dataclasses import dataclass
 from datetime import datetime
 
 
-@dataclass
-class BaseMessage(ABC):
+@dataclass  # type: ignore
+class BaseMessage(metaclass=ABCMeta):
     message_id: str
     from_user: str
     to_user: str
