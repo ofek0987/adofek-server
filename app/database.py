@@ -18,6 +18,7 @@ Base.query = db_session.query_property()
 
 
 def init_db():
+    """Create all the needed tables in the database."""
     import app.models  # noqa: F401
 
     Base.metadata.create_all(bind=engine)
