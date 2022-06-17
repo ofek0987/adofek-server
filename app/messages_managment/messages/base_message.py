@@ -7,6 +7,8 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import TYPE_CHECKING
 
+import dateutil.parser
+
 from app import consts
 
 if TYPE_CHECKING:
@@ -32,6 +34,21 @@ class BaseMessage(metaclass=ABCMeta):
         dict_json = self._get_vars_dict_for_json()
         dict_json[consts.MESSAGE_JSON_TYPE_FIELD] = self.type.value
         return json.dumps(dict_json)
+
+    @classmethod
+    def from_json(cls, json_data: str) -> BaseMessage:
+        """
+        Create a message object based on its json representation.
+        The json data assumes to be valid and to match the message type.
+        :param json_data: The data to create the message object by.
+        :return: Message object.
+        """
+        data = json.loads(json_data)
+        data.pop(consts.MESSAGE_JSON_TYPE_FIELD)
+        data[consts.MESSAGE_SENT_TIMESTAMP_FILED] = dateutil.parser.parse(
+            data[consts.MESSAGE_SENT_TIMESTAMP_FILED],
+        )
+        return cls(**data)
 
     def _get_vars_dict_for_json(self) -> dict:
         """Generate stringified dict from the class's properties."""
