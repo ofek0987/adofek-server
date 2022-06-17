@@ -20,8 +20,8 @@ class BaseMessage(metaclass=ABCMeta):
     to_user: str
     sent_timestamp: datetime
 
-    @abstractmethod
     @property
+    @abstractmethod
     def type(self) -> MessageType:
         """Message type in enum representation."""
         ...
