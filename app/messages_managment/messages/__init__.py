@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 
+from .message_failed_error_message import MessageFailedErrorMessage
 from app import consts
 from app.enums.message_type import MessageType
 from app.messages_managment.messages.base_message import BaseMessage
@@ -34,6 +35,7 @@ def resolve_json_to_message(json_data: str) -> BaseMessage:
         MessageType.FILE: FileMessage,
         MessageType.TEXT: TextMessage,
         MessageType.ERROR: ErrorMessage,
+        MessageType.MESSAGE_FAIL: MessageFailedErrorMessage,
     }
     message_type = _get_message_type(json_data)
     return message_type_to_message_class_resolver[message_type] \

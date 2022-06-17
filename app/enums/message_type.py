@@ -9,3 +9,4 @@ class MessageType(Enum):
     FILE = 'file'
     IMAGE = 'image'
     ERROR = 'error'
+    MESSAGE_FAIL = 'message_fail'
