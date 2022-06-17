@@ -8,3 +8,4 @@ class MessageType(Enum):
     TEXT = 'text'
     FILE = 'file'
     IMAGE = 'image'
+    ERROR = 'error'

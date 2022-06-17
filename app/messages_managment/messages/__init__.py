@@ -5,9 +5,18 @@ import json
 from app import consts
 from app.enums.message_type import MessageType
 from app.messages_managment.messages.base_message import BaseMessage
+from app.messages_managment.messages.error_message import ErrorMessage
 from app.messages_managment.messages.file_message import FileMessage
 from app.messages_managment.messages.image_message import ImageMessage
 from app.messages_managment.messages.text_message import TextMessage
+
+
+def _get_message_type(json_data: str):
+    return MessageType(
+        json.loads(
+            json_data,
+        )[consts.MESSAGE_JSON_TYPE_FIELD],
+    )
 
 
 def resolve_json_to_message(json_data: str) -> BaseMessage:
@@ -17,15 +26,15 @@ def resolve_json_to_message(json_data: str) -> BaseMessage:
     :param json_data: The json data to resolve.
     :return: Message object
     """
-    message_type_to_message_class_resolver = {
+    message_type_to_message_class_resolver: dict[
+        MessageType,
+        type[BaseMessage],
+    ] = {
         MessageType.IMAGE: ImageMessage,
         MessageType.FILE: FileMessage,
         MessageType.TEXT: TextMessage,
+        MessageType.ERROR: ErrorMessage,
     }
-    message_type = MessageType(
-        json.loads(
-            json_data,
-        )[consts.MESSAGE_JSON_TYPE_FIELD],
-    )
-    return message_type_to_message_class_resolver[message_type]\
+    message_type = _get_message_type(json_data)
+    return message_type_to_message_class_resolver[message_type] \
         .from_json(json_data)
