@@ -56,3 +56,6 @@ class BaseMessage(metaclass=ABCMeta):
             key: str(value)
             for key, value in vars(self).items()
         }
+
+    def __lt__(self, other: BaseMessage):
+        return self.sent_timestamp < other.sent_timestamp
