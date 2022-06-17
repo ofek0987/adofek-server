@@ -10,3 +10,4 @@ class MessageType(Enum):
     IMAGE = 'image'
     ERROR = 'error'
     MESSAGE_FAIL = 'message_fail'
+    MESSAGE_SENT = 'message_sent'
