@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from dataclasses_json.core import Json
-
 from .message_failed_error_message import MessageFailedErrorMessage
 from .message_sent_message import MessageSentMessage
 from app import consts
@@ -12,9 +10,10 @@ from app.messages_managment.messages.error_message import ErrorMessage
 from app.messages_managment.messages.file_message import FileMessage
 from app.messages_managment.messages.image_message import ImageMessage
 from app.messages_managment.messages.text_message import TextMessage
+from app.types import JsonDict
 
 
-def resolve_json_to_message(json_data: Json) -> BaseMessage:
+def resolve_json_to_message(json_data: JsonDict) -> BaseMessage:
     """
     Create message object based on its json representation.
     :param json_data: The json data to resolve.

@@ -7,10 +7,9 @@ from dataclasses import dataclass
 from datetime import datetime
 
 from dataclasses_json import DataClassJsonMixin
-from dataclasses_json.api import A
-from dataclasses_json.core import Json
 
 from app import consts
+from app.types import JsonDict
 
 if typing.TYPE_CHECKING:
     from app.enums.message_type import MessageType
@@ -29,20 +28,23 @@ class BaseMessage(DataClassJsonMixin, metaclass=ABCMeta):
         """Message type in enum representation."""
         ...
 
-    def to_dict(self, encode_json=False) -> dict[str, Json]:
+    def to_dict(self, encode_json: bool = False) -> JsonDict:
         result = super().to_dict(encode_json)
         result[consts.MESSAGE_JSON_TYPE_FIELD] = self.type.value
         return result
 
     @classmethod
     def from_dict(
-        cls,
-        kvs: Json,
-        *,
-        infer_missing=False,
-    ) -> A:
+            cls,
+            kvs: JsonDict,
+            *,
+            infer_missing: bool = False,
+    ) -> BaseMessage:
         kvs.pop(consts.MESSAGE_JSON_TYPE_FIELD)
-        return super().from_dict(kvs=kvs, infer_missing=infer_missing)
+        return super().from_dict(  # type: ignore
+            kvs=kvs,
+            infer_missing=infer_missing,
+        )
 
     def __lt__(self, other: BaseMessage):
         return self.sent_timestamp < other.sent_timestamp
