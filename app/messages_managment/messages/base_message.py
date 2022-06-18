@@ -31,9 +31,9 @@ class BaseMessage(metaclass=ABCMeta):
     def to_json(self) -> str:
         """Represent a message in json form.
         Used for sending/receiving messages."""
-        dict_json = self._get_vars_dict_for_json()
+        dict_json = vars(self)
         dict_json[consts.MESSAGE_JSON_TYPE_FIELD] = self.type.value
-        return json.dumps(dict_json)
+        return json.dumps(dict_json, default=str)
 
     @classmethod
     def from_json(cls, json_data: str) -> BaseMessage:
@@ -49,13 +49,6 @@ class BaseMessage(metaclass=ABCMeta):
             data[consts.MESSAGE_SENT_TIMESTAMP_FILED],
         )
         return cls(**data)
-
-    def _get_vars_dict_for_json(self) -> dict:
-        """Generate stringified dict from the class's properties."""
-        return {
-            key: str(value)
-            for key, value in vars(self).items()
-        }
 
     def __lt__(self, other: BaseMessage):
         return self.sent_timestamp < other.sent_timestamp
