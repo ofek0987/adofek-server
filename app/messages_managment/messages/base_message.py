@@ -1,22 +1,23 @@
 from __future__ import annotations
 
-import json
+import typing
 from abc import ABCMeta
 from abc import abstractmethod
 from dataclasses import dataclass
 from datetime import datetime
-from typing import TYPE_CHECKING
 
-import dateutil.parser
+from dataclasses_json import DataClassJsonMixin
+from dataclasses_json.api import A
+from dataclasses_json.core import Json
 
 from app import consts
 
-if TYPE_CHECKING:
+if typing.TYPE_CHECKING:
     from app.enums.message_type import MessageType
 
 
 @dataclass  # type: ignore
-class BaseMessage(metaclass=ABCMeta):
+class BaseMessage(DataClassJsonMixin, metaclass=ABCMeta):
     message_id: str
     from_user: str
     to_user: str
@@ -28,27 +29,20 @@ class BaseMessage(metaclass=ABCMeta):
         """Message type in enum representation."""
         ...
 
-    def to_json(self) -> str:
-        """Represent a message in json form.
-        Used for sending/receiving messages."""
-        dict_json = vars(self)
-        dict_json[consts.MESSAGE_JSON_TYPE_FIELD] = self.type.value
-        return json.dumps(dict_json, default=str)
+    def to_dict(self, encode_json=False) -> dict[str, Json]:
+        result = super().to_dict(encode_json)
+        result[consts.MESSAGE_JSON_TYPE_FIELD] = self.type.value
+        return result
 
     @classmethod
-    def from_json(cls, json_data: str) -> BaseMessage:
-        """
-        Create a message object based on its json representation.
-        The json data assumes to be valid and to match the message type.
-        :param json_data: The data to create the message object by.
-        :return: Message object.
-        """
-        data = json.loads(json_data)
-        data.pop(consts.MESSAGE_JSON_TYPE_FIELD)
-        data[consts.MESSAGE_SENT_TIMESTAMP_FILED] = dateutil.parser.parse(
-            data[consts.MESSAGE_SENT_TIMESTAMP_FILED],
-        )
-        return cls(**data)
+    def from_dict(
+        cls,
+        kvs: Json,
+        *,
+        infer_missing=False,
+    ) -> A:
+        kvs.pop(consts.MESSAGE_JSON_TYPE_FIELD)
+        return super().from_dict(kvs=kvs, infer_missing=infer_missing)
 
     def __lt__(self, other: BaseMessage):
         return self.sent_timestamp < other.sent_timestamp
