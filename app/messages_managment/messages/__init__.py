@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import json
+from dataclasses_json.core import Json
 
 from .message_failed_error_message import MessageFailedErrorMessage
 from .message_sent_message import MessageSentMessage
@@ -13,15 +13,7 @@ from app.messages_managment.messages.image_message import ImageMessage
 from app.messages_managment.messages.text_message import TextMessage
 
 
-def _get_message_type(json_data: str):
-    return MessageType(
-        json.loads(
-            json_data,
-        )[consts.MESSAGE_JSON_TYPE_FIELD],
-    )
-
-
-def resolve_json_to_message(json_data: str) -> BaseMessage:
+def resolve_json_to_message(json_data: Json) -> BaseMessage:
     """
     Create message object based on its json representation.
     Assumes the json data is valid.
@@ -39,6 +31,6 @@ def resolve_json_to_message(json_data: str) -> BaseMessage:
         MessageType.MESSAGE_FAIL: MessageFailedErrorMessage,
         MessageType.MESSAGE_SENT: MessageSentMessage,
     }
-    message_type = _get_message_type(json_data)
+    message_type = MessageType(json_data[consts.MESSAGE_JSON_TYPE_FIELD])
     return message_type_to_message_class_resolver[message_type] \
-        .from_json(json_data)
+        .from_dict(json_data)
