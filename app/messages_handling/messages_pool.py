@@ -4,7 +4,7 @@ import bisect
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from app.messages_managment.messages.base_message import BaseMessage
+    from app.messages_handling.messages.base_message import BaseMessage
 
 
 class MessagesPool:

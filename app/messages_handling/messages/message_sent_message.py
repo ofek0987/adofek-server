@@ -7,7 +7,7 @@ from dataclasses_json import config
 from marshmallow import fields
 
 from app.enums.message_type import MessageType
-from app.messages_managment.messages.base_message import BaseMessage
+from app.messages_handling.messages.base_message import BaseMessage
 
 
 @dataclass

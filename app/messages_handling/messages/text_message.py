@@ -7,22 +7,19 @@ from dataclasses_json import config
 from marshmallow import fields
 
 from app.enums.message_type import MessageType
-from app.messages_managment.messages.base_message import BaseMessage
+from app.messages_handling.messages.base_message import BaseMessage
 
 
 @dataclass
-class ErrorMessage(BaseMessage):
-    reason: str = field(
+class TextMessage(BaseMessage):
+    """Ordinary text message."""
+
+    text: str = field(
         metadata=config(
             mm_field=fields.String(),
-        ),
-    )
-    status_code: int = field(
-        metadata=config(
-            mm_field=fields.Integer(),
         ),
     )
 
     @property
     def type(self) -> MessageType:
-        return MessageType.ERROR
+        return MessageType.TEXT
