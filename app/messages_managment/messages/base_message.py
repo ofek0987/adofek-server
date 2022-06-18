@@ -28,9 +28,14 @@ class BaseMessage(DataClassJsonMixin, metaclass=ABCMeta):
         """Message type in enum representation."""
         ...
 
-    def to_dict(self, encode_json: bool = False) -> JsonDict:
+    def to_dict(
+        self, encode_json: bool = False,
+        add_type_field: bool = True,
+    ) -> JsonDict:
+        """Extend method with type field option."""
         result = super().to_dict(encode_json)
-        result[consts.MESSAGE_JSON_TYPE_FIELD] = self.type.value
+        if add_type_field:
+            result[consts.MESSAGE_JSON_TYPE_FIELD] = self.type.value
         return result
 
     @classmethod
@@ -40,7 +45,10 @@ class BaseMessage(DataClassJsonMixin, metaclass=ABCMeta):
             *,
             infer_missing: bool = False,
     ) -> BaseMessage:
-        kvs.pop(consts.MESSAGE_JSON_TYPE_FIELD)
+        """Allows the dict to contain a 'type' field
+        in addition to the superclass functionality."""
+        if consts.MESSAGE_JSON_TYPE_FIELD in kvs.keys():
+            kvs.pop(consts.MESSAGE_JSON_TYPE_FIELD)
         return super().from_dict(  # type: ignore
             kvs=kvs,
             infer_missing=infer_missing,
