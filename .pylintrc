@@ -1,0 +1,6 @@
+[MASTER]
+disable=
+    C0114,
+
+[SPELLING]
+spelling-dict=en_US
