@@ -1,8 +1,9 @@
 from __future__ import annotations
-USERS_TABLE_NAME = 'users'
+
+USERS_TABLE_NAME = "users"
 MAX_USERNAME_LENGTH = 50
 PASSWORD_HASH_MAX_LENGTH = 128
 USER_STATUS_MAX_LENGTH = 10
-MESSAGE_JSON_TYPE_FIELD = 'message_type'
-MESSAGE_SENT_TIMESTAMP_FILED = 'sent_timestamp'
-JSON_DATA_FIELD = 'data'
+MESSAGE_JSON_TYPE_FIELD = "message_type"
+MESSAGE_SENT_TIMESTAMP_FILED = "sent_timestamp"
+JSON_DATA_FIELD = "data"

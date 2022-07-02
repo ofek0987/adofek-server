@@ -1,14 +1,11 @@
 from __future__ import annotations
 
 import typing
-from abc import ABCMeta
-from abc import abstractmethod
-from dataclasses import dataclass
-from dataclasses import field
+from abc import ABCMeta, abstractmethod
+from dataclasses import dataclass, field
 from datetime import datetime
 
-from dataclasses_json import config
-from dataclasses_json import DataClassJsonMixin
+from dataclasses_json import DataClassJsonMixin, config
 from marshmallow import fields
 
 if typing.TYPE_CHECKING:
@@ -34,7 +31,7 @@ class BaseMessage(DataClassJsonMixin, metaclass=ABCMeta):
     )
     sent_timestamp: datetime = field(
         metadata=config(
-            mm_field=fields.DateTime(format='iso'),
+            mm_field=fields.DateTime(format="iso"),
             encoder=datetime.isoformat,
             decoder=datetime.fromisoformat,
         ),
