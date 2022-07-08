@@ -5,7 +5,6 @@ from app.messages_handling.messages.file_message import FileMessage
 
 
 class ImageMessage(FileMessage):
-
     @property
     def type(self) -> MessageType:
         return MessageType.IMAGE

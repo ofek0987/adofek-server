@@ -1,9 +1,7 @@
 from __future__ import annotations
 
-from sqlalchemy import Column
-from sqlalchemy import String
-from werkzeug.security import check_password_hash
-from werkzeug.security import generate_password_hash
+from sqlalchemy import Column, String
+from werkzeug.security import check_password_hash, generate_password_hash
 
 from app import consts
 from app.database import Base
@@ -22,5 +20,5 @@ class User(Base):
 
     def check_password(self, password: str) -> bool:
         """Checks if a given raw password matches the
-         encrypted password saved in the database."""
+        encrypted password saved in the database."""
         return check_password_hash(self.password_hash, password)
