@@ -17,12 +17,21 @@ Base: Any = declarative_base()
 Base.query = db_session.query_property()
 
 
-def init_db(application: Flask):
-    """Create all the needed tables in the database."""
-    import app.models  # noqa: F401
+def _clean_session_threads(application: Flask):
+    """
+    Clean db session for each thread.
+    Check https://flask.palletsprojects.com/en/2.1.x/patterns/sqlalchemy/
+    Args:
+        application (Flask): The singelton flask application.
+    """
 
     @application.teardown_appcontext
-    def shutdown_session(exception=None):
+    def shutdown_session(exception: Exception = None):
         db_session.remove()
 
+
+def init_db(application: Flask):
+    import app.models  # noqa: F401
+
+    _clean_session_threads(application)
     Base.metadata.create_all(bind=engine)
