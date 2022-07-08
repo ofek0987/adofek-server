@@ -1,5 +1,5 @@
 dataclasses-json==0.5.7
-
+Flask==2.1.2
 marshmallow==3.16.0
 mysqlclient==2.1.0
 SQLAlchemy==1.4.37
