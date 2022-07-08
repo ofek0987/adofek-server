@@ -21,4 +21,4 @@ class User(Base):
     def check_password(self, password: str) -> bool:
         """Checks if a given raw password matches the
         encrypted password saved in the database."""
-        return check_password_hash(self.password_hash, password)
+        return check_password_hash(self.password_hash, password)  # type: ignore
