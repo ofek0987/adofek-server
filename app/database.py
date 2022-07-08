@@ -22,7 +22,7 @@ def _clean_session_threads(application: Flask):
     Clean db session for each thread.
     Check https://flask.palletsprojects.com/en/2.1.x/patterns/sqlalchemy/
     Args:
-        application (Flask): The singelton flask application.
+        application (Flask): The singleton flask application.
     """
 
     @application.teardown_appcontext
