@@ -26,7 +26,7 @@ def _clean_session_threads(application: Flask):
     """
 
     @application.teardown_appcontext
-    def shutdown_session(exception: Exception = None):
+    def shutdown_session(exception: BaseException | None = None):
         db_session.remove()
 
 
