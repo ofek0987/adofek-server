@@ -1,6 +1,7 @@
 [MASTER]
 disable=
     C0114,
+    missing-class-docstring
 
 [SPELLING]
 spelling-dict=en_US
