@@ -1,0 +1,4 @@
+{
+    "SQLALCHEMY_DATABASE_URI": "mysql://root:password@localhost/adofek",
+    "SQLALCHEMY_TRACK_MODIFICATIONS": false
+}

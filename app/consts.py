@@ -7,3 +7,4 @@ USER_STATUS_MAX_LENGTH = 10
 MESSAGE_JSON_TYPE_FIELD = "message_type"
 MESSAGE_SENT_TIMESTAMP_FILED = "sent_timestamp"
 JSON_DATA_FIELD = "data"
+CONFIG_FILE = "config.json"
