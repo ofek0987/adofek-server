@@ -3,11 +3,10 @@ from __future__ import annotations
 from sqlalchemy import Column, String
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from app import consts
-from app.database import Base
+from app import consts, db
 
 
-class User(Base):
+class User(db.Model):  # type: ignore
     __tablename__ = consts.USERS_TABLE_NAME
 
     username = Column(String(consts.MAX_USERNAME_LENGTH), primary_key=True)
